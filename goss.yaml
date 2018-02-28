@@ -1,0 +1,54 @@
+file:
+  /etc/localtime:
+    exists: true
+    filetype: file
+  /etc/nginx/conf.d/default.conf:
+    exists: true
+    filetype: file
+  /etc/nginx/nginx.conf:
+    exists: true
+    filetype: file
+  /etc/php7/php-fpm.d/www.conf:
+    exists: true
+    filetype: file
+  /etc/supervisor/supervisord.conf:
+    exists: true
+    filetype: file
+  /sbin/entrypoint.sh:
+    exists: true
+    filetype: file
+  /usr/bin/php:
+    exists: true
+    linked-to: /usr/bin/php7
+    filetype: symlink
+  /var/log/nginx/error.log:
+    exists: true
+    linked-to: /dev/stderr
+    filetype: symlink
+  /var/log/php7/error.log:
+    exists: true
+    linked-to: /dev/stderr
+    filetype: symlink
+  /var/spool/cron/crontabs/root:
+    exists: true
+    filetype: file
+package:
+  bash:
+    installed: true
+    versions:
+    - 4.4.19-r1
+  dcron:
+    installed: true
+    versions:
+    - 4.5-r3
+  php7:
+    installed: true
+    versions:
+    - 7.1.12-r0
+  supervisor:
+    installed: true
+    versions:
+    - 3.3.3-r1
+process:
+  supervisord:
+    running: true

@@ -1,0 +1,33 @@
+version: '2'
+services:
+
+  application:
+    image: IMAGENAME
+    restart: "always"
+    volumes:
+      - app-storage:/var/www/html/storage
+    labels:
+      - traefik.enable=true
+      - traefik.port=8000
+      - traefik.frontend.rule=Host:somedomain.com.br
+      - io.rancher.container.pull_image=always
+    environment:
+      # production environment values
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:10.2
+    restart: always
+    volumes:
+      - database-data:/var/lib/mysql
+
+volumes:
+  database-data:
+    driver: "rancher-nfs"
+    driver_opts:
+      onRemove: retain
+  app-storage:
+    driver: "rancher-nfs"
+    driver_opts:
+      onRemove: retain

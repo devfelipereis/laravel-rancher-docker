@@ -1,0 +1,40 @@
+version: '2.0'
+services:
+
+  application:
+    hostname: dev.somedomain.com.br
+    container_name: CONTAINER_NAME
+    build:
+      context: .
+    volumes:
+      - ./:/var/www/html
+      - ./docker/logs/nginx:/var/log/nginx
+      - ./docker/logs/php7:/var/log/php7
+    ports:
+      - "80:8000"
+      - "443:443"
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:10.2
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - database-data:/var/lib/mysql
+
+  dns-proxy:
+    image: defreitas/dns-proxy-server
+    container_name: dns-proxy-server
+    logging:
+      driver: none
+    hostname: dns.mageddo
+    volumes:
+      - /opt/dns-proxy-server/conf:/app/conf
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/resolv.conf:/etc/resolv.conf
+
+volumes:
+  database-data:
+    driver: "local"
