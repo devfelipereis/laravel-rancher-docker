@@ -27,17 +27,6 @@ services:
     volumes:
       - database-data:/var/lib/mysql
 
-  dns-proxy:
-    image: defreitas/dns-proxy-server
-    container_name: dns-proxy-server
-    logging:
-      driver: none
-    hostname: dns.mageddo
-    volumes:
-      - /opt/dns-proxy-server/conf:/app/conf
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /etc/resolv.conf:/etc/resolv.conf
-
 volumes:
   database-data:
     driver: "local"
