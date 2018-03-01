@@ -2,8 +2,6 @@ version: '2.0'
 services:
 
   application:
-    hostname: dev.somedomain.com.br
-    container_name: CONTAINER_NAME
     build:
       context: .
     volumes:
