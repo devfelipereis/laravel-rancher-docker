@@ -1,3 +1,6 @@
+PROJECT=`pwd | xargs basename`
+TESTIMAGE=${PROJECT}:testing
+
 up:
 	docker-compose up --build
 
@@ -25,3 +28,7 @@ key\:db:
 
 migrate:
 	docker-compose exec application php artisan migrate
+
+image\:test:
+	docker build -f Dockerfile.prod -t ${TESTIMAGE} .
+	GOSS_SLEEP=3 dgoss run -i ${TESTIMAGE}
