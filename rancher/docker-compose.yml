@@ -14,9 +14,9 @@ services:
     environment:
       # production environment values
     depends_on:
-      - mariadb
+      - database
 
-  mariadb:
+  database:
     image: mariadb:10.2
     restart: always
     volumes:
