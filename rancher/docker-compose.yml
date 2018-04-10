@@ -3,6 +3,7 @@ services:
 
   application:
     image: IMAGENAME
+    hostname: appName.application
     restart: "always"
     volumes:
       - app-storage:/var/www/html/storage
@@ -11,14 +12,23 @@ services:
       - traefik.port=8000
       - traefik.frontend.rule=Host:somedomain.com.br
       - io.rancher.container.pull_image=always
+    secrets:
+      - secretName
     environment:
+      - SECRET_NAME=secretName
       # production environment values
     depends_on:
       - database
 
   database:
     image: mariadb:10.2
+    hostname: appName.database
     restart: always
+    secrets:
+      - appName-db
+    environment:
+      - MYSQL_DATABASE=someDatabaseName
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/appName-db
     volumes:
       - database-data:/var/lib/mysql
 
@@ -31,3 +41,9 @@ volumes:
     driver: "rancher-nfs"
     driver_opts:
       onRemove: retain
+
+secrets:
+  secretName:
+    external: 'true'
+  secretName-db:
+    external: 'true'

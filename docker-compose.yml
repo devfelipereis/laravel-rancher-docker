@@ -16,12 +16,11 @@ services:
 
   database:
     image: mariadb:10.2
-    restart: always
     environment:
       - MYSQL_DATABASE=${DB_DATABASE}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
     ports:
-      - "3306:3306"
+      - "33306:3306"
     volumes:
       - database-data:/var/lib/mysql
 

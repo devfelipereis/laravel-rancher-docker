@@ -1,5 +1,6 @@
 PROJECT=`pwd | xargs basename`
 TESTIMAGE=${PROJECT}:testing
+USER=nginx
 
 up:
 	docker-compose up --build
@@ -11,7 +12,7 @@ stop:
 	docker-compose stop
 
 sh:
-	docker-compose exec application bash
+	docker-compose exec --user=${USER} application bash
 
 sh\:db:
 	docker-compose exec database bash
@@ -22,12 +23,12 @@ setup:
 
 key\:db:
 	echo "Generating key..."
-	docker-compose exec application php artisan key:generate && php artisan config:clear
+	docker-compose exec --user=${USER} application php artisan key:generate && php artisan config:clear
 	echo "Migrating and seeding..."
-	docker-compose exec application php artisan migrate --seed
+	docker-compose exec --user=${USER} application php artisan migrate --seed
 
 migrate:
-	docker-compose exec application php artisan migrate
+	docker-compose exec --user=${USER} application php artisan migrate
 
 image\:test:
 	docker build -f Dockerfile.prod -t ${TESTIMAGE} .
