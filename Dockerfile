@@ -26,7 +26,7 @@ RUN apk add --no-cache --update \
     php7-zip@php \
     php7-zlib@php \
     php7-pdo_mysql@php \
-    bash grep dcron tzdata \
+    bash git grep dcron tzdata \
     supervisor
 
 # Configure time
