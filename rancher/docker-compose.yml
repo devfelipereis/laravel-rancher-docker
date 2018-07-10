@@ -32,12 +32,24 @@ services:
     volumes:
       - database-data:/var/lib/mysql
 
+  redis:
+    image: redis:4.0.5-alpine
+    hostname: appName.redis
+    restart: always
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+
 volumes:
   database-data:
     driver: "rancher-nfs"
     driver_opts:
       onRemove: retain
   app-storage:
+    driver: "rancher-nfs"
+    driver_opts:
+      onRemove: retain
+  redis-data:
     driver: "rancher-nfs"
     driver_opts:
       onRemove: retain

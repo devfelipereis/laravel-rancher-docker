@@ -41,6 +41,8 @@ RUN apk add --no-cache --update \
     php7-zip@php \
     php7-zlib@php \
     php7-pdo_mysql@php \
+    # php7-pcntl@php \
+    # php7-posix@php \
     bash git grep dcron tzdata \
     supervisor
 
